@@ -1,5 +1,10 @@
+import Steps from "../components/stepper"
+
 export default function Page() {
     return(
-        <p>Editor Page</p>
+        <div>
+            <h1>Editor Page</h1>
+            <Steps />
+        </div>
     )
 }

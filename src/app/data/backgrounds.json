@@ -1,0 +1,18 @@
+[
+    {
+        "path": "/backgrounds/background_01.png",
+        "alt": "fondo_01"
+    },
+    {
+        "path": "/backgrounds/background_02.png",
+        "alt": "fondo_02"
+    },
+    {
+        "path": "/backgrounds/background_03.png",
+        "alt": "fondo_03"
+    },
+    {
+        "path": "/backgrounds/background_04.png",
+        "alt": "fondo_04"
+    }
+]
