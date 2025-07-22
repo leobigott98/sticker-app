@@ -12,7 +12,7 @@ import { StepType } from "../lib/definitions";
 import backgrounds from "@/app/data/backgrounds.json";
 import stickers from "@/app/data/stickers.json";
 import { Dispatch, SetStateAction } from "react";
-import {StickerCanvas} from "../components/stickerCanvas";
+import { StickerCanvas, StickerCanvasHandle } from "../components/stickerCanvas";
 import Export from "./export";
 import { useRef } from "react";
 import Link from "next/link";
@@ -56,7 +56,7 @@ export default function HorizontalLinearStepper({
   >;
 }) {
   const [activeStep, setActiveStep] = React.useState(0);
-  const canvasRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<StickerCanvasHandle>(null);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -94,10 +94,10 @@ export default function HorizontalLinearStepper({
         sx={{
           mb: 2,
           "& .MuiStepLabel-label": {
-            fontSize: "0.875rem",
+            fontSize: "2rem",
           },
           "& .MuiStepIcon-root": {
-            fontSize: "1.5rem",
+            fontSize: "3.5rem",
           },
         }}
       >
@@ -119,9 +119,19 @@ export default function HorizontalLinearStepper({
         }}
       >
         {activeStep === steps.length ? (
+          <div className="space-y-5">
           <Export 
             canvasRef={canvasRef}
           />
+          <StickerCanvas
+              className="relative w-[1000px] h-[400px] border border-gray-300 rounded overflow-hidden"
+              backgroundImage={backgroundImage}
+              stickers={stickers}
+              setStickers={setStickers}
+              ref={canvasRef} 
+            />
+          
+          </div>
         ) : (
           <div className="flex justify-center md:sticky md:top-4">
             {activeStep === 1 && (

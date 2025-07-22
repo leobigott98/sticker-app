@@ -1,42 +1,54 @@
 "use client";
 
 //import Image from "next/image";
-import { Dispatch, SetStateAction, useRef, useImperativeHandle, forwardRef, } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useRef,
+  useImperativeHandle,
+  forwardRef,
+} from "react";
 import Image from "next/image";
 
-export const StickerCanvas = forwardRef( function StickerCanvas({
-  className,
-  backgroundImage,
-  stickers, // { topLeft, topRight, bottomLeft, bottomRight }
-  setStickers,
-}: {
-  className?: string;
-  backgroundImage: string | null;
-  stickers: {
-    topLeft: string | null;
-    topRight: string | null;
-    bottomLeft: string | null;
-    bottomRight: string | null;
-  } | null;
-  setStickers: Dispatch<
-    SetStateAction<{
+// Type for the exposed handle
+export type StickerCanvasHandle = {
+  getCanvas: () => HTMLDivElement | null;
+};
+
+export const StickerCanvas = forwardRef<
+  StickerCanvasHandle,
+  {
+    className?: string;
+    backgroundImage: string | null;
+    stickers: {
       topLeft: string | null;
       topRight: string | null;
       bottomLeft: string | null;
       bottomRight: string | null;
-    }>
-  >;
-}, ref) {
+    } | null;
+    setStickers: Dispatch<
+      SetStateAction<{
+        topLeft: string | null;
+        topRight: string | null;
+        bottomLeft: string | null;
+        bottomRight: string | null;
+      }>
+    >;
+  }
+>(function StickerCanvas(
+  { className, backgroundImage, stickers, setStickers },
+  ref
+) {
   const canvasRef = useRef<HTMLDivElement>(null);
 
-  // Expose canvasRef to parent via forwardRef
+  // This makes getCanvas() available on the ref
   useImperativeHandle(ref, () => ({
     getCanvas: () => canvasRef.current,
   }));
 
   return (
     <div
-      ref={canvasRef}
+      id="sticker-canvas"
       className={
         className
           ? className
@@ -61,7 +73,13 @@ export const StickerCanvas = forwardRef( function StickerCanvas({
             })
           }
         >
-          <Image src={stickers.topLeft} alt="Top Left Sticker" width={150} height={150} />
+          <Image
+            src={stickers.topLeft}
+            alt="Top Left Sticker"
+            width={200}
+            height={200}
+            className="grow"
+          />
         </div>
       )}
 
@@ -77,14 +95,19 @@ export const StickerCanvas = forwardRef( function StickerCanvas({
             })
           }
         >
-          <Image src={stickers.topRight} alt="Top Right Sticker" width={150} height={150} />
+          <Image
+            src={stickers.topRight}
+            alt="Top Right Sticker"
+            width={200}
+            height={200}
+          />
         </div>
       )}
 
       {/* Bottom Left */}
       {stickers?.bottomLeft && (
         <div
-          className="absolute bottom-10 left-20"
+          className="absolute bottom-1 left-20"
           //style={{ backgroundImage: `url(${stickers.bottomLeft})` }}
           onClick={() =>
             setStickers({
@@ -93,14 +116,19 @@ export const StickerCanvas = forwardRef( function StickerCanvas({
             })
           }
         >
-          <Image src={stickers.bottomLeft} alt="Bottom Left Sticker" width={200} height={200} />
+          <Image
+            src={stickers.bottomLeft}
+            alt="Bottom Left Sticker"
+            width={200}
+            height={200}
+          />
         </div>
       )}
 
       {/* Bottom Right */}
       {stickers?.bottomRight && (
         <div
-          className="absolute bottom-10 right-20"
+          className="absolute bottom-1 right-20"
           //style={{ backgroundImage: `url(${stickers.bottomRight})` }}
           onClick={() =>
             setStickers({
@@ -109,7 +137,12 @@ export const StickerCanvas = forwardRef( function StickerCanvas({
             })
           }
         >
-          <Image src={stickers.bottomRight} alt="Bottom Right Sticker" width={200} height={200} />
+          <Image
+            src={stickers.bottomRight}
+            alt="Bottom Right Sticker"
+            width={200}
+            height={200}
+          />
         </div>
       )}
     </div>

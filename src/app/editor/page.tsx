@@ -15,9 +15,9 @@ export default function Page() {
   return (
     <div className="p-4 space-y-8">
       {/* Friendly Banner / Hero Section */}
-      <div className="bg-gradient-to-r from-blue-100 via-indigo-100 to-purple-100 p-6 rounded-xl shadow-md text-center space-y-2">
+      {/* <div className="bg-gradient-to-r from-blue-100 via-indigo-100 to-purple-100 p-6 rounded-xl shadow-md text-center space-y-2">
         <div className="flex justify-center">
-          {/* <Sparkles className="w-8 h-8 text-indigo-500" /> */}
+          
         </div>
         <h2 className="text-xl font-semibold text-indigo-700">¡Bienvenido!</h2>
         <p className="text-sm text-gray-700 max-w-md mx-auto">
@@ -25,7 +25,7 @@ export default function Page() {
           customizar tu etiquera. ¡Es súper sencillo! — te guiaremos en cada
           paso ✨
         </p>
-      </div>
+      </div> */}
 
       {/* Stepper */}
       <div className="flex flex-col md:flex-row gap-4 p-4">
