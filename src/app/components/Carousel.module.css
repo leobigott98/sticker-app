@@ -1,0 +1,58 @@
+.embla {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.embla__container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin-top: 2.5rem;
+  user-select: none;
+}
+
+.embla__slide {
+  flex: 0 0 auto;
+  padding: 1rem;
+  margin: 0.5rem;
+  margin-bottom: -2.0rem;
+  display: flex;
+  z-index: 1;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0.9;
+  transform: scale(0.9);
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  border-width: 1px;
+  border-color: gray;
+}
+
+.embla__slide img {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+}
+
+.embla__slide.is-clone {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  z-index: 0;
+}
+
+.embla__slide__active {
+  transform: scale(1.0);
+  opacity: 1;
+  z-index: 10;
+}
+
+.embla__slide--dummy {
+  pointer-events: none;
+  opacity: 0;
+  height: 150px; /* use same height as your real slides */
+  flex: 0 0 auto;
+}
+

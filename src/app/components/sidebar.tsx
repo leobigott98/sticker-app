@@ -1,17 +1,67 @@
-import Image from 'next/image';
-import { Asset } from '../lib/definitions';
+"use client";
 
-export default function SideBar({ assets } : { assets : Asset[] | null} ) {
+import Image from "next/image";
+import { Asset } from "../lib/definitions";
+import useEmblaCarousel from "embla-carousel-react";
+import { useEffect, useState } from "react";
+import styles from "./Carousel.module.css";
+
+export default function SideBar({ assets }: { assets: Asset[] | null }) {
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: false,
+    axis: "y",
+    containScroll: "keepSnaps",
+    dragFree: true,
+    align: "start",
+  });
+
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const onSelect = () => {
+      setSelectedIndex(emblaApi.selectedScrollSnap());
+    };
+
+    emblaApi.on("select", onSelect);
+    onSelect(); // set initial index
+  }, [emblaApi]);
+
   return (
-    <div className="flex h-full flex-col px-3 py-4 md:px-2">
-      <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
-        {assets?.map((asset) => {
+    <div className="w-1/4 h-screen overflow-hidden">
+        {assets? assets.length > 10 ? (
+            <div className={`${styles.embla}`} ref={emblaRef}>
+        <div className={styles.embla__container}>
+            {/* <div className="embla__slide embla__slide--dummy"></div> */}
+          {assets?.map((asset, index) => {
             return (
-                <Image key={asset.path} src={asset.path} alt={asset.alt} width={500} height={500}/>
-            )
-        })}
-        <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
+              <div
+                key={index}
+                className={`${styles.embla__slide} ${
+                  index === selectedIndex ? styles.embla__slide__active : ""
+                }`}
+                onClick={()=>{
+                    setSelectedIndex(index);
+                    emblaApi?.scrollTo(index);
+                }}
+              >
+                <Image
+                  src={asset.path}
+                  alt={asset.alt}
+                  width={180}
+                  height={180}
+                />
+              </div>
+            );
+          })}
+           {/* <div className="embla__slide embla__slide--dummy"></div> */}
+        </div>
       </div>
+        ) : (
+            <div>Too short</div>
+        ) : <></>}
+      
     </div>
   );
 }

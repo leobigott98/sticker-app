@@ -43,9 +43,9 @@ export default function HorizontalLinearStepper() {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Stepper activeStep={activeStep}>
-        {steps.map((step, index) => {
+    <Box sx={{ width: "100%", height: "100%" }}>
+      <Stepper activeStep={activeStep} sx={{marginBottom: "1rem"}}>
+        {steps.map((step) => {
           const stepProps: { completed?: boolean } = {};
           const labelProps: {
             optional?: React.ReactNode;
