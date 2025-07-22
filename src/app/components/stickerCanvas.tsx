@@ -1,10 +1,10 @@
 "use client";
 
 //import Image from "next/image";
-import { Dispatch, SetStateAction, useRef } from "react";
+import { Dispatch, SetStateAction, useRef, useImperativeHandle, forwardRef, } from "react";
 import Image from "next/image";
 
-export default function StickerCanvas({
+export const StickerCanvas = forwardRef( function StickerCanvas({
   className,
   backgroundImage,
   stickers, // { topLeft, topRight, bottomLeft, bottomRight }
@@ -26,8 +26,13 @@ export default function StickerCanvas({
       bottomRight: string | null;
     }>
   >;
-}) {
+}, ref) {
   const canvasRef = useRef<HTMLDivElement>(null);
+
+  // Expose canvasRef to parent via forwardRef
+  useImperativeHandle(ref, () => ({
+    getCanvas: () => canvasRef.current,
+  }));
 
   return (
     <div
@@ -109,4 +114,4 @@ export default function StickerCanvas({
       )}
     </div>
   );
-}
+});

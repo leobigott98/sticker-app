@@ -12,7 +12,10 @@ import { StepType } from "../lib/definitions";
 import backgrounds from "@/app/data/backgrounds.json";
 import stickers from "@/app/data/stickers.json";
 import { Dispatch, SetStateAction } from "react";
-import StickerCanvas from "../components/stickerCanvas";
+import {StickerCanvas} from "../components/stickerCanvas";
+import Export from "./export";
+import { useRef } from "react";
+import Link from "next/link";
 
 const steps: StepType[] = [
   {
@@ -53,6 +56,7 @@ export default function HorizontalLinearStepper({
   >;
 }) {
   const [activeStep, setActiveStep] = React.useState(0);
+  const canvasRef = useRef<HTMLDivElement>(null);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -64,6 +68,13 @@ export default function HorizontalLinearStepper({
 
   const handleReset = () => {
     setActiveStep(0);
+    setBackgroundImage('')
+    setStickers({
+      topLeft: null,
+      topRight: null,
+      bottomLeft: null,
+      bottomRight: null
+    })
   };
 
   return (
@@ -108,9 +119,9 @@ export default function HorizontalLinearStepper({
         }}
       >
         {activeStep === steps.length ? (
-          <Typography variant="h6" align="center">
-            ¡Completaste todos los pasos!
-          </Typography>
+          <Export 
+            canvasRef={canvasRef}
+          />
         ) : (
           <div className="flex justify-center md:sticky md:top-4">
             {activeStep === 1 && (
@@ -166,6 +177,7 @@ export default function HorizontalLinearStepper({
               backgroundImage={backgroundImage}
               stickers={stickers}
               setStickers={setStickers}
+              ref={canvasRef} 
             />
           </div>
         )}
@@ -197,9 +209,10 @@ export default function HorizontalLinearStepper({
             Atrás
           </Button>
           {activeStep === steps.length ? (
-            <Button variant="contained" color="secondary" onClick={handleReset}>
+
+            <Link onClick={handleReset} href={'/'} className="px-6 py-3 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition">
               Reiniciar
-            </Button>
+            </Link>
           ) : (
             <Button variant="contained" onClick={handleNext}>
               {activeStep === steps.length - 1 ? "Terminar" : "Siguiente"}
