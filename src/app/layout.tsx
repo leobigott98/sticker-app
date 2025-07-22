@@ -40,7 +40,9 @@ export default function RootLayout({
       >
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <ThemeProvider theme={theme}>
-            {children}
+             <div className="min-h-screen">
+              {children}
+            </div>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>

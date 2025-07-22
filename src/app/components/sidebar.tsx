@@ -58,9 +58,20 @@ export default function SideBar({ assets }: { assets: Asset[] | null }) {
            {/* <div className="embla__slide embla__slide--dummy"></div> */}
         </div>
       </div>
-        ) : (
-            <div>Too short</div>
-        ) : <></>}
+        ) : 
+            assets.map((asset, index)=>{
+                return(
+                    <div key={index} className="m-10">
+                        <Image     
+                            src={asset.path}
+                            alt={asset.alt}
+                            width={250}
+                            height={250}
+                        />
+                    </div>
+                )
+            })
+         : <></>}
       
     </div>
   );
