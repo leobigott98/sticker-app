@@ -44,10 +44,6 @@ export async function POST(req: Request) {
       } 
       )
 
-    
-
-    // Optionally save `publicUrlData.publicUrl` to your DB here
-
     return Response.json({ url: publicUrlData.publicUrl })
   } catch (err) {
     console.error(err)
