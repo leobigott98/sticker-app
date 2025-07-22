@@ -12,9 +12,14 @@ export default function Export({ canvasRef }: { canvasRef: any }) {
   const handleExport = async () => {
     setLoading(true);
 
-    if (!canvasRef?.current?.getCanvas) return;
+    if (!canvasRef?.current?.getCanvas) {
+        console.log('no ref')
+        return
+    };
     const canvasEl = canvasRef.current.getCanvas();
-    if (!canvasEl) return alert("Canvas not found");
+    if (!canvasEl) {
+        alert("Canvas not found")
+        return };
 
     try {
       const dataUrl = await toPng(canvasEl);
