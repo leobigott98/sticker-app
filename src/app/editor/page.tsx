@@ -1,10 +1,23 @@
-import Steps from "../components/stepper"
+import Steps from "../components/stepper";
 
 export default function Page() {
-    return(
-        <div className="h-full grow">
-            <h1>Editor Page</h1>
-            <Steps />
+  return (
+    <div className="p-4 space-y-8">
+      {/* Friendly Banner / Hero Section */}
+      <div className="bg-gradient-to-r from-blue-100 via-indigo-100 to-purple-100 p-6 rounded-xl shadow-md text-center space-y-2">
+        <div className="flex justify-center">
+          {/* <Sparkles className="w-8 h-8 text-indigo-500" /> */}
         </div>
-    )
+        <h2 className="text-xl font-semibold text-indigo-700">¡Bienvenido!</h2>
+        <p className="text-sm text-gray-700 max-w-md mx-auto">
+          Sigue los pasos para colocar las imágenes de tu preferencia y
+          customizar tu etiquera. ¡Es súper sencillo! — te guiaremos en cada
+          paso ✨
+        </p>
+      </div>
+
+      {/* Stepper */}
+      <Steps />
+    </div>
+  );
 }
