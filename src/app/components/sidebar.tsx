@@ -6,7 +6,13 @@ import useEmblaCarousel from "embla-carousel-react";
 import { useEffect, useState } from "react";
 import styles from "./Carousel.module.css";
 
-export default function SideBar({ assets }: { assets: Asset[] | null }) {
+export default function SideBar({
+  assets,
+  onSelectAsset,
+}: {
+  assets: Asset[] | null;
+  onSelectAsset: (url: string) => void;
+}) {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
     axis: "y",
@@ -29,7 +35,7 @@ export default function SideBar({ assets }: { assets: Asset[] | null }) {
   }, [emblaApi]);
 
   return (
-    <div className="w-1/4 overflow-hidden">
+    <div className="w-1/6 overflow-hidden">
       {assets ? (
         assets.length > 10 ? (
           <div className={`${styles.embla}`} ref={emblaRef}>
@@ -43,6 +49,7 @@ export default function SideBar({ assets }: { assets: Asset[] | null }) {
                   onClick={() => {
                     setSelectedIndex(index);
                     emblaApi?.scrollTo(index);
+                    onSelectAsset(asset.path);
                   }}
                 >
                   <Image
@@ -56,9 +63,12 @@ export default function SideBar({ assets }: { assets: Asset[] | null }) {
             </div>
           </div>
         ) : (
-          <div className="overflow-y-auto px-4 py-6 space-y-6">
+          <div className="overflow-y-auto">
             {assets.map((asset, index) => (
-              <div key={index}>
+              <div key={index}
+              className="m-5 cursor-pointer"
+              onClick={() => onSelectAsset(asset.path)}
+              >
                 <Image
                   src={asset.path}
                   alt={asset.alt}

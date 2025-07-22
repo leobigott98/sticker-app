@@ -36,13 +36,13 @@ export default function HorizontalLinearStepper({
   setStickers,
 }: {
   backgroundImage: string | null;
-  setBackgroundImage: Dispatch<SetStateAction<string | null>>;
+  setBackgroundImage: Dispatch<SetStateAction<string>>;
   stickers: {
-    topLeft?: string | null;
-    topRight?: string | null;
-    bottomLeft?: string | null;
-    bottomRight?: string | null;
-  } | null;
+    topLeft: string | null;
+    topRight: string | null;
+    bottomLeft: string | null;
+    bottomRight: string | null;
+  };
   setStickers: Dispatch<
     SetStateAction<{
       topLeft: string | null;
@@ -50,7 +50,7 @@ export default function HorizontalLinearStepper({
       bottomLeft: string | null;
       bottomRight: string | null;
     }>
-  > | null;
+  >;
 }) {
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -112,13 +112,44 @@ export default function HorizontalLinearStepper({
             ¡Completaste todos los pasos!
           </Typography>
         ) : (
-      <div className="flex justify-center md:sticky md:top-4">
-        <SideBar assets={steps[activeStep].assets} />
-        <StickerCanvas
-          backgroundImage={backgroundImage}
-          stickers={stickers}
-        />
-      </div>
+          <div className="flex justify-center md:sticky md:top-4">
+            <SideBar
+              assets={steps[activeStep].assets}
+              onSelectAsset={(url: string) => {
+                if (activeStep === 0) {
+                  setBackgroundImage?.(url);
+                } else if (activeStep === 1) {
+                  if (!stickers) return;
+                  const updated: {
+                    topLeft: string | null;
+                    topRight: string | null;
+                    bottomLeft: string | null;
+                    bottomRight: string | null;
+                  } = { ...stickers };
+
+                  const positions = [
+                    "topLeft",
+                    "topRight",
+                    "bottomLeft",
+                    "bottomRight",
+                  ] as const;
+                  for (const pos of positions) {
+                    if (!updated[pos]) {
+                      updated[pos] = url;
+                      break;
+                    }
+                  }
+
+                  setStickers(updated);
+                }
+              }}
+            />
+            <StickerCanvas
+              className="relative w-[900px] h-[400px] border border-gray-300 rounded overflow-hidden"
+              backgroundImage={backgroundImage}
+              stickers={stickers}
+            />
+          </div>
         )}
       </Box>
 

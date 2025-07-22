@@ -4,9 +4,11 @@
 import { useRef } from "react";
 
 export default function StickerCanvas({
+  className,
   backgroundImage,
   stickers, // { topLeft, topRight, bottomLeft, bottomRight }
 }: {
+  className?: string,
   backgroundImage: string | null;
   stickers: {
     topLeft?: string | null;
@@ -20,7 +22,7 @@ export default function StickerCanvas({
   return (
     <div
       ref={canvasRef}
-      className="relative w-[400px] h-[400px] border border-gray-300 rounded overflow-hidden"
+      className={className? className : `relative w-[900px] h-[400px] border border-gray-300 rounded overflow-hidden`}
       style={{
         backgroundImage: backgroundImage ? `url(${backgroundImage})` : "none",
         backgroundColor: backgroundImage ? "transparent" : "#e5e7eb", // Tailwind gray-200

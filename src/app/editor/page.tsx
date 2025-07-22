@@ -4,7 +4,7 @@ import { useState } from "react";
 import Steps from "../components/stepper";
 
 export default function Page() {
-  const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
+  const [backgroundImage, setBackgroundImage] = useState<string>('');
   const [stickers, setStickers] = useState<{topLeft: string | null, topRight: string | null, bottomLeft: string | null, bottomRight: string | null}>({
     topLeft: null,
     topRight: null,
