@@ -113,6 +113,23 @@ export default function HorizontalLinearStepper({
           </Typography>
         ) : (
           <div className="flex justify-center md:sticky md:top-4">
+            {activeStep === 1 && (
+              <div className="absolute top-4 right-4 z-50">
+                <button
+                  onClick={() =>
+                    setStickers?.({
+                      topLeft: null,
+                      topRight: null,
+                      bottomLeft: null,
+                      bottomRight: null,
+                    })
+                  }
+                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
+                >
+                  Resetear Stickers
+                </button>
+              </div>
+            )}
             <SideBar
               assets={steps[activeStep].assets}
               onSelectAsset={(url: string) => {
@@ -148,6 +165,7 @@ export default function HorizontalLinearStepper({
               className="relative w-[900px] h-[400px] border border-gray-300 rounded overflow-hidden"
               backgroundImage={backgroundImage}
               stickers={stickers}
+              setStickers={setStickers}
             />
           </div>
         )}
