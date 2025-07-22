@@ -1,6 +1,17 @@
+"use client";
+
+import { useState } from "react";
 import Steps from "../components/stepper";
 
 export default function Page() {
+  const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
+  const [stickers, setStickers] = useState<{topLeft: string | null, topRight: string | null, bottomLeft: string | null, bottomRight: string | null}>({
+    topLeft: null,
+    topRight: null,
+    bottomLeft: null,
+    bottomRight: null,
+  });
+
   return (
     <div className="p-4 space-y-8">
       {/* Friendly Banner / Hero Section */}
@@ -17,7 +28,18 @@ export default function Page() {
       </div>
 
       {/* Stepper */}
-      <Steps />
+      <div className="flex flex-col md:flex-row gap-4 p-4">
+
+      {/* Steps (with access to setBackgroundImage/setStickers) */}
+      <div className="flex-1">
+        <Steps
+          backgroundImage={backgroundImage}
+          setBackgroundImage={setBackgroundImage}
+          stickers={stickers}
+          setStickers={setStickers}
+        />
+      </div>
+    </div>
     </div>
   );
 }

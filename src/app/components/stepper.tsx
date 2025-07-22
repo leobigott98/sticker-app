@@ -11,6 +11,8 @@ import SideBar from "./sidebar";
 import { StepType } from "../lib/definitions";
 import backgrounds from "@/app/data/backgrounds.json";
 import stickers from "@/app/data/stickers.json";
+import { Dispatch, SetStateAction } from "react";
+import StickerCanvas from "../components/stickerCanvas";
 
 const steps: StepType[] = [
   {
@@ -27,7 +29,29 @@ const steps: StepType[] = [
   },
 ];
 
-export default function HorizontalLinearStepper() {
+export default function HorizontalLinearStepper({
+  backgroundImage,
+  setBackgroundImage,
+  stickers,
+  setStickers,
+}: {
+  backgroundImage: string | null;
+  setBackgroundImage: Dispatch<SetStateAction<string | null>>;
+  stickers: {
+    topLeft?: string | null;
+    topRight?: string | null;
+    bottomLeft?: string | null;
+    bottomRight?: string | null;
+  } | null;
+  setStickers: Dispatch<
+    SetStateAction<{
+      topLeft: string | null;
+      topRight: string | null;
+      bottomLeft: string | null;
+      bottomRight: string | null;
+    }>
+  > | null;
+}) {
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
@@ -88,7 +112,13 @@ export default function HorizontalLinearStepper() {
             ¡Completaste todos los pasos!
           </Typography>
         ) : (
-          <SideBar assets={steps[activeStep].assets} />
+      <div className="flex justify-center md:sticky md:top-4">
+        <SideBar assets={steps[activeStep].assets} />
+        <StickerCanvas
+          backgroundImage={backgroundImage}
+          stickers={stickers}
+        />
+      </div>
         )}
       </Box>
 
