@@ -73,13 +73,14 @@ export const StickerCanvas = forwardRef<
             })
           }
         >
+          <div className="w-[200px] h-[200px] flex items-center justify-center">
           <Image
             src={stickers.topLeft}
             alt="Top Left Sticker"
-            width={200}
-            height={200}
-            className="grow"
+            fill
+            className="object-contain"
           />
+          </div>
         </div>
       )}
 
@@ -95,19 +96,21 @@ export const StickerCanvas = forwardRef<
             })
           }
         >
+          <div className="w-[200px] h-[200px] flex items-center justify-center">
           <Image
             src={stickers.topRight}
             alt="Top Right Sticker"
-            width={200}
-            height={200}
+            fill
+            className="object-contain"
           />
+          </div>
         </div>
       )}
 
       {/* Bottom Left */}
       {stickers?.bottomLeft && (
         <div
-          className="absolute bottom-1 left-20"
+          className="absolute bottom-0 left-10"
           //style={{ backgroundImage: `url(${stickers.bottomLeft})` }}
           onClick={() =>
             setStickers({
@@ -116,19 +119,21 @@ export const StickerCanvas = forwardRef<
             })
           }
         >
+          <div className="w-[300px] h-[300px] flex items-center justify-center">
           <Image
             src={stickers.bottomLeft}
             alt="Bottom Left Sticker"
-            width={200}
-            height={200}
+            fill
+            className="object-contain"
           />
+          </div>
         </div>
       )}
 
       {/* Bottom Right */}
       {stickers?.bottomRight && (
         <div
-          className="absolute bottom-1 right-20"
+          className="absolute bottom-0 right-10"
           //style={{ backgroundImage: `url(${stickers.bottomRight})` }}
           onClick={() =>
             setStickers({
@@ -137,12 +142,14 @@ export const StickerCanvas = forwardRef<
             })
           }
         >
+          <div className="w-[300px] h-[300px] bottom-0 flex items-end justify-baseline">
           <Image
             src={stickers.bottomRight}
             alt="Bottom Right Sticker"
-            width={200}
-            height={200}
+            fill
+            className="object-contain"
           />
+          </div>
         </div>
       )}
     </div>

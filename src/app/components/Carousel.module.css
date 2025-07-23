@@ -1,13 +1,13 @@
 .embla {
-  height: 100vh;
+  height: 70rem;
   overflow: hidden;
 }
 
 .embla__container {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  margin-top: 2.5rem;
+  height: 90%;
+  /* margin-top: 2.5rem; */
   user-select: none;
 }
 

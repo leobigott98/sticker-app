@@ -16,12 +16,12 @@ export default function SideBar({
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
     axis: "y",
-    containScroll: "keepSnaps",
+    //containScroll: "keepSnaps",
     dragFree: true,
-    align: "start",
+    align: "center",
   });
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(1);
 
   useEffect(() => {
     if (!emblaApi) return;
@@ -72,9 +72,9 @@ export default function SideBar({
                 <Image
                   src={asset.path}
                   alt={asset.alt}
-                  width={250}
-                  height={250}
-                  className="rounded-xl object-contain"
+                  width={350}
+                  height={350}
+                  className="rounded-lg object-contain"
                 />
               </div>
             ))}

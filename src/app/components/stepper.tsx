@@ -12,7 +12,10 @@ import { StepType } from "../lib/definitions";
 import backgrounds from "@/app/data/backgrounds.json";
 import stickers from "@/app/data/stickers.json";
 import { Dispatch, SetStateAction } from "react";
-import { StickerCanvas, StickerCanvasHandle } from "../components/stickerCanvas";
+import {
+  StickerCanvas,
+  StickerCanvasHandle,
+} from "../components/stickerCanvas";
 import Export from "./export";
 import { useRef } from "react";
 import Link from "next/link";
@@ -23,11 +26,11 @@ const steps: StepType[] = [
     assets: backgrounds,
   },
   {
-    title: "Elige los stickers que más te gusten",
+    title: "Elige tus stickers",
     assets: stickers,
   },
   {
-    title: "Previsualiza e imprime",
+    title: "Imprime",
     assets: null,
   },
 ];
@@ -68,13 +71,13 @@ export default function HorizontalLinearStepper({
 
   const handleReset = () => {
     setActiveStep(0);
-    setBackgroundImage('')
+    setBackgroundImage("");
     setStickers({
       topLeft: null,
       topRight: null,
       bottomLeft: null,
-      bottomRight: null
-    })
+      bottomRight: null,
+    });
   };
 
   return (
@@ -98,6 +101,13 @@ export default function HorizontalLinearStepper({
           },
           "& .MuiStepIcon-root": {
             fontSize: "3.5rem",
+            /*  color: "#cf0087" */
+          },
+          "& .MuiStepIcon-root.Mui-active": {
+            color: "#cf0087",
+          },
+          "& .MuiStepIcon-root.Mui-completed": {
+            color: "#cf0087",
           },
         }}
       >
@@ -114,28 +124,26 @@ export default function HorizontalLinearStepper({
           flexGrow: 1,
           overflow: "hidden",
           display: "flex",
+          height: "75.4rem",
           /* justifyContent: "center",
           alignItems: "center", */
         }}
       >
         {activeStep === steps.length ? (
           <div className="space-y-5">
-          <Export 
-            canvasRef={canvasRef}
-          />
-          <StickerCanvas
+            <Export />
+            <StickerCanvas
               className="relative w-[1000px] h-[400px] border border-gray-300 rounded overflow-hidden"
               backgroundImage={backgroundImage}
               stickers={stickers}
               setStickers={setStickers}
-              ref={canvasRef} 
+              ref={canvasRef}
             />
-          
           </div>
         ) : (
-          <div className="flex justify-center md:sticky md:top-4">
+          <div className="flex justify-center items-center md:sticky md:top-4">
             {activeStep === 1 && (
-              <div className="absolute top-4 right-4 z-50">
+              <div className="absolute top-105 right-4 z-50">
                 <button
                   onClick={() =>
                     setStickers?.({
@@ -151,44 +159,56 @@ export default function HorizontalLinearStepper({
                 </button>
               </div>
             )}
-            <SideBar
-              assets={steps[activeStep].assets}
-              onSelectAsset={(url: string) => {
-                if (activeStep === 0) {
-                  setBackgroundImage?.(url);
-                } else if (activeStep === 1) {
-                  if (!stickers) return;
-                  const updated: {
-                    topLeft: string | null;
-                    topRight: string | null;
-                    bottomLeft: string | null;
-                    bottomRight: string | null;
-                  } = { ...stickers };
+            {activeStep === steps.length - 1 ? (
+              <StickerCanvas
+                className="relative w-[1000px] h-[400px] border border-gray-300 rounded overflow-hidden"
+                backgroundImage={backgroundImage}
+                stickers={stickers}
+                setStickers={setStickers}
+                ref={canvasRef}
+              />
+            ) : (
+              <>
+                <SideBar
+                  assets={steps[activeStep].assets}
+                  onSelectAsset={(url: string) => {
+                    if (activeStep === 0) {
+                      setBackgroundImage?.(url);
+                    } else if (activeStep === 1) {
+                      if (!stickers) return;
+                      const updated: {
+                        topLeft: string | null;
+                        topRight: string | null;
+                        bottomLeft: string | null;
+                        bottomRight: string | null;
+                      } = { ...stickers };
 
-                  const positions = [
-                    "topLeft",
-                    "topRight",
-                    "bottomLeft",
-                    "bottomRight",
-                  ] as const;
-                  for (const pos of positions) {
-                    if (!updated[pos]) {
-                      updated[pos] = url;
-                      break;
+                      const positions = [
+                        "topLeft",
+                        "topRight",
+                        "bottomLeft",
+                        "bottomRight",
+                      ] as const;
+                      for (const pos of positions) {
+                        if (!updated[pos]) {
+                          updated[pos] = url;
+                          break;
+                        }
+                      }
+
+                      setStickers(updated);
                     }
-                  }
-
-                  setStickers(updated);
-                }
-              }}
-            />
-            <StickerCanvas
-              className="relative w-[900px] h-[400px] border border-gray-300 rounded overflow-hidden"
-              backgroundImage={backgroundImage}
-              stickers={stickers}
-              setStickers={setStickers}
-              ref={canvasRef} 
-            />
+                  }}
+                />
+                <StickerCanvas
+                  className="relative w-[900px] h-[400px] border border-gray-300 rounded overflow-hidden"
+                  backgroundImage={backgroundImage}
+                  stickers={stickers}
+                  setStickers={setStickers}
+                  ref={canvasRef}
+                />
+              </>
+            )}
           </div>
         )}
       </Box>
@@ -199,32 +219,41 @@ export default function HorizontalLinearStepper({
           mt: 2,
           py: 3,
           px: 2,
-          backgroundColor: "#f0f4f8",
+          backgroundColor: "#009d7f",
           borderRadius: 2,
           textAlign: "center",
+          alignContent: "center",
+          height: "15rem",
         }}
       >
-        <Typography variant="subtitle1" gutterBottom>
+        {/* <Typography variant="subtitle1" gutterBottom sx={{fontSize: 32}}>
           {activeStep < steps.length
             ? "Cuando estés listo, haz clic en Siguiente"
             : "¿Quieres volver a empezar?"}
-        </Typography>
-
-        <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
+        </Typography> */}
+        
+        <Box sx={{ display: "flex", justifyContent: "center", gap: 3 }}>
           <Button
             variant="outlined"
             disabled={activeStep === 0}
             onClick={handleBack}
+            sx={{ fontSize: 32, color: "white" }}
           >
             Atrás
           </Button>
           {activeStep === steps.length ? (
-
-            <Link onClick={handleReset} href={'/'} className="px-6 py-3 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition">
-              Reiniciar
-            </Link>
+            <Button
+              variant="contained"
+              onClick={handleNext}
+              sx={{ fontSize: 32, visibility: "hidden" }}
+            >
+            </Button>
           ) : (
-            <Button variant="contained" onClick={handleNext}>
+            <Button
+              variant="contained"
+              onClick={handleNext}
+              sx={{ fontSize: 32 }}
+            >
               {activeStep === steps.length - 1 ? "Terminar" : "Siguiente"}
             </Button>
           )}

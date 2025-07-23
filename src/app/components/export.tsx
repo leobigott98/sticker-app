@@ -1,37 +1,84 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { toPng } from "html-to-image";
+import { useRouter } from "next/navigation";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function Export({ canvasRef }: { canvasRef: any }) {
+export default function Export() {
   const [name, setName] = useState(1);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  /* useEffect(() => {
-  if (canvasRef.current) {
-    console.log(canvasRef.current.getCanvas());
-  }
-}, [canvasRef]); */
+  const waitForImagesToLoad = async (container: HTMLElement): Promise<void> => {
+  const images = container.querySelectorAll("img");
+  const promises = Array.from(images).map(
+    (img) =>
+      new Promise<void>((resolve) => {
+        if (img.complete) {
+          resolve();
+        } else {
+          img.onload = () => resolve();
+          img.onerror = () => resolve(); // still resolve even on error
+        }
+      })
+  );
+  return Promise.all(promises).then(() => undefined);
+};
+
 
   const handleExport = async () => {
     setLoading(true);
 
-    /* if (!canvasRef?.current?.getCanvas) {
-      console.log("no ref");
-      return;
-    } */
-
     const canvasEl = document.getElementById("sticker-canvas"); // 👈 Get by ID
-    
+
     if (!canvasEl) {
       alert("Canvas not found");
       return;
     }
 
     try {
-      const dataUrl = await toPng(canvasEl);
+      /* const dataUrl = await toPng(canvasEl, {
+        width: 1860,
+        height: 840,
+        style: {
+          transform: "scale(2.0667)", // 1860 / 900 = 2.0667
+          transformOrigin: "top left",
+        },
+      }); */
+
+      /* const dataUrl = await toPng(canvasEl, {
+        width: 1860,
+        height: 840,
+        pixelRatio: 1, // Ensure 1:1 ratio for sharpness
+        canvasWidth: 1860,
+        canvasHeight: 840,
+        skipAutoScale: true, // Optional, prevents resizing
+        style: {
+          margin: "0px",
+          padding: "0px",
+          boxSizing: "border-box",
+          backgroundColor: "#fff", // optional: white background for print
+        },
+      }); */
+
+      await waitForImagesToLoad(canvasEl);
+
+      const dataUrl = await toPng(canvasEl, {
+        /* width: 1860,
+        height: 840, */
+        pixelRatio: 1, // Ensure 1:1 ratio for sharpness
+        canvasWidth: 1860,
+        canvasHeight: 840,
+        //skipAutoScale: true, // Optional, prevents resizing
+        style: {
+          margin: "0px",
+          padding: "0px",
+          boxSizing: "border-box",
+          backgroundColor: "#fff", // optional: white background for print
+        },
+      });
 
       const res = await fetch("/api/upload", {
         method: "POST",
@@ -46,10 +93,11 @@ export default function Export({ canvasRef }: { canvasRef: any }) {
 
       if (!res.ok) throw new Error("Upload failed");
 
-      alert("Exported successfully!");
+      alert("Exportado exitosamente!");
+      router.push('/');
     } catch (err) {
       console.error(err);
-      alert("Failed to export image.");
+      alert("Fallo exportando imagen");
     } finally {
       setLoading(false);
     }
@@ -57,9 +105,7 @@ export default function Export({ canvasRef }: { canvasRef: any }) {
 
   return (
     <div className="flex flex-col items-center gap-4 mt-6">
-      <label
-        className="text-3xl font-bold"
-      >
+      <label className="text-3xl font-bold">
         Ingrese el número de etiqueta
       </label>
       <input
@@ -74,9 +120,9 @@ export default function Export({ canvasRef }: { canvasRef: any }) {
       <button
         onClick={handleExport}
         disabled={loading}
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+        className="absolute bottom-31 right-95 text-xl font-bold bg-blue-600 text-white px-4 py-4 rounded-xl hover:bg-blue-700 disabled:opacity-50"
       >
-        {loading ? "Exportando..." : "Exportar"}
+        {loading ? "EXPOR..." : "IMPRIMIR"}
       </button>
     </div>
   );

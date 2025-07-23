@@ -5,18 +5,18 @@ export default function Page() {
   return(
     <div className="relative w-screen h-screen">
       <Image
-        src="/Portada.png"
+        src="/Portada2.png"
         alt="Portada"
         fill
         className="object-cover"
         priority
       />
-        <div className="absolute bottom-72 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
+        <div className="absolute bottom-3/12 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
           <Link
           href={'/editor'} 
           className="px-12 py-6 bg-blue-600 text-white rounded-full shadow-sm hover:bg-blue-700 transition text-2xl shadow-white"
           >
-            ¡Crea tu propia Etiqueta!
+            ¡EMPIEZA!
           </Link>
       </div>
     </div>
