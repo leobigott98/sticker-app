@@ -22,8 +22,12 @@ const style = {
 };
 
 export default function BasicModal({open, setOpen} : {open: boolean, setOpen: React.Dispatch<React.SetStateAction<boolean>>}) {
-  const handleClose = () => setOpen(false);
   const router = useRouter();
+  const handleClose = () => {
+    setOpen(false)
+    router.refresh();
+    router.push('/');
+    };
 
   return (
     <div>
@@ -43,10 +47,7 @@ export default function BasicModal({open, setOpen} : {open: boolean, setOpen: Re
           </Typography> */}
           <Button
             variant="contained"
-            onClick={()=>{
-                router.refresh();
-                router.push('/');
-            }}
+            onClick={handleClose}
             sx={{position: 'absolute', bottom: 30, left: 150}}
           >Aceptar</Button>
         </Box>
