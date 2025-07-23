@@ -2,12 +2,13 @@
 
 import { useRef, useState } from "react";
 import { toPng } from "html-to-image";
-import { useRouter } from "next/navigation";
+import BasicModal from "./success-modal";
 
 export default function Export() {
-  const [name, setName] = useState(1);
+  const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const [openModal, setOpenModal] = useState(false);
+  const handleOpenModal = () => setOpenModal(true);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const waitForImagesToLoad = async (container: HTMLElement): Promise<void> => {
@@ -92,9 +93,7 @@ export default function Export() {
 
       if (!res.ok) throw new Error("Upload failed");
 
-      alert("Exportado exitosamente!");
-      router.refresh();
-      router.push('/');
+      handleOpenModal();
     } catch (err) {
       console.error(err);
       alert("Fallo exportando imagen");
@@ -105,17 +104,18 @@ export default function Export() {
 
   return (
     <div className="flex flex-col items-center gap-4 mt-6">
+      <BasicModal open={openModal} setOpen={setOpenModal}/>
       <label className="text-3xl font-bold">
         Ingrese el número de etiqueta
       </label>
       <input
         ref={inputRef}
-        type="number"
-        min={1}
+        type="text"
         className="border rounded px-3 py-2 w-32 text-center"
         value={name}
-        onChange={(e) => setName(Number(e.target.value))}
-        placeholder="ID"
+        onChange={(e) => setName(e.target.value)}
+        required
+        placeholder="001"
       />
       <button
         onClick={handleExport}

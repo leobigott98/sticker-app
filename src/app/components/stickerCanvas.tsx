@@ -141,7 +141,7 @@ export const StickerCanvas = forwardRef<
             })
           }
         >
-          <div className="w-[250px] h-[250px] bottom-0 flex items-end justify-baseline">
+          <div className="w-[250px] h-[250px] bottom-0 flex items-end justify-center">
           { /* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={stickers.bottomRight}

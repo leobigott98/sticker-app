@@ -122,7 +122,7 @@ export default function HorizontalLinearStepper({
           flexGrow: 1,
           overflow: "hidden",
           display: "flex",
-          height: "75.4rem",
+          height: "75rem",
           /* justifyContent: "center",
           alignItems: "center", */
         }}
