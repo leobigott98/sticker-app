@@ -4,7 +4,6 @@ import { useRef, useState } from "react";
 import { toPng } from "html-to-image";
 import { useRouter } from "next/navigation";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function Export() {
   const [name, setName] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -94,6 +93,7 @@ export default function Export() {
       if (!res.ok) throw new Error("Upload failed");
 
       alert("Exportado exitosamente!");
+      router.refresh();
       router.push('/');
     } catch (err) {
       console.error(err);
@@ -122,7 +122,7 @@ export default function Export() {
         disabled={loading}
         className="absolute bottom-31 right-95 text-xl font-bold bg-blue-600 text-white px-4 py-4 rounded-xl hover:bg-blue-700 disabled:opacity-50"
       >
-        {loading ? "EXPOR..." : "IMPRIMIR"}
+        {loading ? "EXPORT..." : "IMPRIMIR"}
       </button>
     </div>
   );

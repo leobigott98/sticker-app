@@ -6,7 +6,6 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import SideBar from "./sidebar";
 import { StepType } from "../lib/definitions";
 import backgrounds from "@/app/data/backgrounds.json";
@@ -18,7 +17,6 @@ import {
 } from "../components/stickerCanvas";
 import Export from "./export";
 import { useRef } from "react";
-import Link from "next/link";
 
 const steps: StepType[] = [
   {
@@ -69,7 +67,7 @@ export default function HorizontalLinearStepper({
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
+/*   const handleReset = () => {
     setActiveStep(0);
     setBackgroundImage("");
     setStickers({
@@ -78,7 +76,7 @@ export default function HorizontalLinearStepper({
       bottomLeft: null,
       bottomRight: null,
     });
-  };
+  }; */
 
   return (
     <Box

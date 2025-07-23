@@ -8,7 +8,6 @@ import {
   useImperativeHandle,
   forwardRef,
 } from "react";
-import Image from "next/image";
 
 // Type for the exposed handle
 export type StickerCanvasHandle = {
@@ -74,10 +73,10 @@ export const StickerCanvas = forwardRef<
           }
         >
           <div className="w-[200px] h-[200px] flex items-center justify-center">
-          <Image
+            { /* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={stickers.topLeft}
             alt="Top Left Sticker"
-            fill
             className="object-contain"
           />
           </div>
@@ -97,10 +96,10 @@ export const StickerCanvas = forwardRef<
           }
         >
           <div className="w-[200px] h-[200px] flex items-center justify-center">
-          <Image
+            { /* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={stickers.topRight}
             alt="Top Right Sticker"
-            fill
             className="object-contain"
           />
           </div>
@@ -119,11 +118,11 @@ export const StickerCanvas = forwardRef<
             })
           }
         >
-          <div className="w-[300px] h-[300px] flex items-center justify-center">
-          <Image
+          <div className="w-[250px] h-[250px] flex items-center justify-center">
+            { /* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={stickers.bottomLeft}
             alt="Bottom Left Sticker"
-            fill
             className="object-contain"
           />
           </div>
@@ -142,11 +141,11 @@ export const StickerCanvas = forwardRef<
             })
           }
         >
-          <div className="w-[300px] h-[300px] bottom-0 flex items-end justify-baseline">
-          <Image
+          <div className="w-[250px] h-[250px] bottom-0 flex items-end justify-baseline">
+          { /* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={stickers.bottomRight}
             alt="Bottom Right Sticker"
-            fill
             className="object-contain"
           />
           </div>
