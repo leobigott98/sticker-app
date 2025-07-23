@@ -16,7 +16,7 @@ export default function Page() {
   return (
     <div className="p-4 space-y-8">
       {/* Friendly Banner / Hero Section */}
-      <div className="flex bg-[#009d7f] rounded-xl shadow-md p-5 justify-end">
+      <div className="flex bg-[#009d7f] rounded-xl shadow-md p-5 pt-0 pb-10 justify-end">
         <Image 
           src='/logo_banner.png'
           alt='logo ism'

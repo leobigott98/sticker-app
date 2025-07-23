@@ -11,9 +11,9 @@ const style = {
   left: '50%',
   justifyContent: 'center',
   transform: 'translate(-50%, -50%)',
-  width: 400,
-  height: 500,
-  backgroundImage: 'url("/Portada.png")',
+  width: '100%',
+  height: '100%',
+  backgroundImage: 'url("/Portada4.png")',
   backgroundPosition: 'top',
   backgroundSize: 'cover',
   border: '2px solid #000',
@@ -31,7 +31,7 @@ export default function BasicModal({open, setOpen} : {open: boolean, setOpen: Re
 
   return (
     <div>
-        <Button onClick={()=>setOpen(true)}>Abrir</Button>
+        {/* <Button onClick={()=>setOpen(true)}>Abrir</Button> */}
       <Modal
         open={open}
         onClose={handleClose}
@@ -39,7 +39,7 @@ export default function BasicModal({open, setOpen} : {open: boolean, setOpen: Re
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h4" sx={{width: '80%', marginX: 'auto', color: 'white', textAlign: 'center', fontWeight: 'bold', paddingTop: 2}}>
+          <Typography id="modal-modal-title" variant="h4" sx={{width: '100%', marginX: 'auto', color: 'white', textAlign: 'center', fontWeight: 'bold', position: 'relative', top: '20%', fontSize: 96, }}>
             ¡Gracias por participar!
           </Typography>
           {/* <Typography id="modal-modal-description" sx={{ mt: 2 }}>
@@ -48,8 +48,8 @@ export default function BasicModal({open, setOpen} : {open: boolean, setOpen: Re
           <Button
             variant="contained"
             onClick={handleClose}
-            sx={{position: 'absolute', bottom: 30, left: 150}}
-          >Aceptar</Button>
+            sx={{position: 'relative', top: '70%', left: '36.5%', width: 300, height: 50, fontSize: 24}}
+          >Volver al Inicio</Button>
         </Box>
       </Modal>
     </div>
