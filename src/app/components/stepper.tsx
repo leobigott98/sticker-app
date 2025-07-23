@@ -17,6 +17,7 @@ import {
 } from "../components/stickerCanvas";
 import Export from "./export";
 import { useRef } from "react";
+import { useRouter } from "next/navigation";
 
 const steps: StepType[] = [
   {
@@ -58,6 +59,7 @@ export default function HorizontalLinearStepper({
 }) {
   const [activeStep, setActiveStep] = React.useState(0);
   const canvasRef = useRef<StickerCanvasHandle>(null);
+  const router = useRouter();
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -67,7 +69,7 @@ export default function HorizontalLinearStepper({
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-/*   const handleReset = () => {
+  /*   const handleReset = () => {
     setActiveStep(0);
     setBackgroundImage("");
     setStickers({
@@ -229,23 +231,32 @@ export default function HorizontalLinearStepper({
             ? "Cuando estés listo, haz clic en Siguiente"
             : "¿Quieres volver a empezar?"}
         </Typography> */}
-        
+
         <Box sx={{ display: "flex", justifyContent: "center", gap: 3 }}>
-          <Button
-            variant="outlined"
-            disabled={activeStep === 0}
-            onClick={handleBack}
-            sx={{ fontSize: 32, color: "white" }}
-          >
-            Atrás
-          </Button>
+          {activeStep === 0 ? (
+            <Button
+              variant="outlined"
+              onClick={()=>router.push("/")}
+              sx={{ fontSize: 32, color: "white" }}
+            >
+              Atrás
+            </Button>
+          ) : (
+            <Button
+              variant="outlined"
+              onClick={handleBack}
+              sx={{ fontSize: 32, color: "white" }}
+            >
+              Atrás
+            </Button>
+          )}
+
           {activeStep === steps.length ? (
             <Button
               variant="contained"
               onClick={handleNext}
               sx={{ fontSize: 32, visibility: "hidden" }}
-            >
-            </Button>
+            ></Button>
           ) : (
             <Button
               variant="contained"

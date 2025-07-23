@@ -5,28 +5,46 @@ import { toPng } from "html-to-image";
 import BasicModal from "./success-modal";
 
 export default function Export() {
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [isValid, setIsValid] = useState(true);
   const handleOpenModal = () => setOpenModal(true);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const waitForImagesToLoad = async (container: HTMLElement): Promise<void> => {
-  const images = container.querySelectorAll("img");
-  const promises = Array.from(images).map(
-    (img) =>
-      new Promise<void>((resolve) => {
-        if (img.complete) {
-          resolve();
-        } else {
-          img.onload = () => resolve();
-          img.onerror = () => resolve(); // still resolve even on error
-        }
-      })
-  );
-  return Promise.all(promises).then(() => undefined);
-};
+  const validate = (val: string) => {
+    const pattern = /^(0(0[1-9]|[1-9][0-9])|1[0-9]{2}|2[0-9]{2}|300)$/;
+    return pattern.test(val);
+  };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setName(val);
+    if(validate(val)){
+      setIsValid(true)
+    } else{
+      setIsValid(false)
+    }
+    /* setIsValid(val === '' || validate(val)); */
+  };
+
+  const canExport = name.trim() !== '' && validate(name) && !loading;
+
+  const waitForImagesToLoad = async (container: HTMLElement): Promise<void> => {
+    const images = container.querySelectorAll("img");
+    const promises = Array.from(images).map(
+      (img) =>
+        new Promise<void>((resolve) => {
+          if (img.complete) {
+            resolve();
+          } else {
+            img.onload = () => resolve();
+            img.onerror = () => resolve(); // still resolve even on error
+          }
+        })
+    );
+    return Promise.all(promises).then(() => undefined);
+  };
 
   const handleExport = async () => {
     setLoading(true);
@@ -104,26 +122,38 @@ export default function Export() {
 
   return (
     <div className="flex flex-col items-center gap-4 mt-6">
-      <BasicModal open={openModal} setOpen={setOpenModal}/>
+      <BasicModal open={openModal} setOpen={setOpenModal} />
+      {/* <form> */}
       <label className="text-3xl font-bold">
         Ingrese el número de etiqueta
       </label>
       <input
         ref={inputRef}
         type="text"
-        className="border rounded px-3 py-2 w-32 text-center"
+        title="Introduce un ID de etiqueta entre 001 y 300"
+        /* className="border rounded px-3 py-2 w-32 text-center" */
+        className={`border px-3 py-2 w-32 rounded text-center ${
+          isValid ? 'border-gray-300' : 'border-red-500'
+        }`}
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        onChange={(e)=>handleChange(e)}
         required
-        placeholder="001"
+        placeholder="e.g. 045"
+        inputMode="numeric"
+        maxLength={3}
       />
+      {!isValid && (
+        <p className="text-red-500 text-sm">El ID debe estar entre 001 y 300</p>
+      )}
       <button
         onClick={handleExport}
-        disabled={loading}
+        disabled={!canExport}
         className="absolute bottom-31 right-95 text-xl font-bold bg-blue-600 text-white px-4 py-4 rounded-xl hover:bg-blue-700 disabled:opacity-50"
+        type="submit"
       >
         {loading ? "EXPORT..." : "IMPRIMIR"}
       </button>
+      {/* </form> */}
     </div>
   );
 }
