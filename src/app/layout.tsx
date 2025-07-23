@@ -24,9 +24,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ISM Soda Sticker App",
-  description: "ISM Soda Sticker Personalization App",
-};
+  title: 'ISM Soda Sticker App',
+  description: 'ISM Soda Sticker Personalization App',
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
+}
 
 export default function RootLayout({
   children,
@@ -35,6 +39,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={roboto.variable}>
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
