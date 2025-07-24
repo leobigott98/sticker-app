@@ -1,5 +1,7 @@
 // app/admin/page.tsx
 
+export const dynamic = 'force-dynamic';
+
 import { fetchStickerImages } from '@/app/lib/data'; // adjust path if needed
 import Image from 'next/image';
 import Link from 'next/link';
